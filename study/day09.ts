@@ -1,9 +1,9 @@
-interface SStorage<T> {
+interface LocalStorageAPI<T> {
   [key: string]: T;
 }
 
 abstract class ALocalStorage<T> {
-  constructor(protected storage: SStorage<T> = {}) {}
+  constructor(protected storage: LocalStorageAPI<T> = {}) {}
 
   abstract setItem(key: string, value: T): void;
   abstract getItem(key: string): T;
@@ -27,7 +27,17 @@ class LocalStorage<T> extends ALocalStorage<T> {
   }
 }
 
-class geolocation<T> {
+interface GeolocationAPI {
+  getCurrentPosition(
+    s: () => void,
+    e?: () => void,
+    o?: [m: number, t: number, e: boolean]
+  ): void;
+  watchPosition(s: () => number, e?: () => number, o?: any[]): number;
+  clearWatch(id: number): void;
+}
+
+class geolocation implements GeolocationAPI {
   //optionObj는 보조 데이터이므로 존재 유무가 함수 플로우에 영향을 주지는 않으므로 검사하지 않는다
   //사용된다면 successFn이나 errorFn에서 사용되거나 할텐데 이들의 구체적인 작동은 여기서 정의하지 않는다.
   //getCurrentPosition은 성공 시 successFn()을, 실패 시 errorFn()을 실행한다

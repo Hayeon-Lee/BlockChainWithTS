@@ -1,7 +1,9 @@
-class Block{
-    constructor(
-        private data:string
-    ){}    
+import { init, exit } from "myPackage";
 
-    static hello() {return "Hi"}
-}
+init({
+  url: "true",
+});
+
+exit(1);
+
+localStorage.clear();
